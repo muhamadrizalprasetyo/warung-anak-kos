@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warung Anak Kos 🍜</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ========== TOAST NOTIFICATION ========== -->
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <!-- ========== LOGIN SCREEN ========== -->
+  <section id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-icon">🍜</span>
+        <h1 class="login-title">Warung<br /><span>Anak Kos</span></h1>
+      </div>
+      <p class="login-sub">Pesan makan, santai di kamar. Kami yang anterin!</p>
+      <div class="login-form">
+        <div class="input-group">
+          <label for="input-name">Nama Kamu</label>
+          <input type="text" id="input-name" placeholder="Contoh: Fatir di Halte" maxlength="40" autocomplete="off" />
+        </div>
+        <div class="input-group">
+          <label for="input-room">Nomor Kamar</label>
+          <input type="text" id="input-room" placeholder="Contoh: 69" maxlength="10" autocomplete="off" />
+        </div>
+        <button id="btn-login" class="btn-primary btn-full">
+          Masuk &amp; Pesan Sekarang →
+        </button>
+      </div>
+      <p class="login-note">Tanpa daftar, tanpa password. Cukup nama & kamar kamu</p>
+    </div>
+    <div class="login-bg-art">
+      <div class="bg-blob b1"></div>
+      <div class="bg-blob b2"></div>
+      <div class="bg-blob b3"></div>
+    </div>
+  </section>
+
+  <!-- ========== MAIN APP ========== -->
+  <div id="app" class="app hidden">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="nav-inner container">
+        <a href="#" class="nav-brand">
+          <span>🍜</span> Warung Anak Kos
+        </a>
+        <div class="nav-user">
+          <span id="nav-user-info" class="user-badge"></span>
+          <button id="btn-cart-toggle" class="btn-cart" aria-label="Buka keranjang">
+            🛒 <span id="cart-count" class="cart-badge hidden">0</span>
+          </button>
+          <button id="btn-logout" class="btn-logout" title="Logout">⏻</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content container">
+        <div class="hero-text">
+          <p class="hero-eyebrow">🔥 Buka setiap hari 06.00 – 24.00</p>
+          <h2 class="hero-title">Lapar tengah malam?<br /><span>Kami siap antar!</span></h2>
+          <p class="hero-desc">Makanan, minuman, & snack favorit kamu — pesan sekarang, sampai di depan kamar.</p>
+          <a href="#catalog" class="btn-primary hero-cta">Lihat Menu →</a>
+        </div>
+        <div class="hero-art">
+          <div class="hero-bowl">🍜</div>
+          <div class="hero-float f1">🥤</div>
+          <div class="hero-float f2">🍟</div>
+          <div class="hero-float f3">⭐</div>
+        </div>
+      </div>
+      <div class="hero-wave">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg)"/></svg>
+      </div>
+    </section>
+
+    <!-- PROMO TANGGAL TUA -->
+    <section class="promo-section container">
+      <div class="promo-grid">
+    
+        <!-- PROMO TANGGAL TUA -->
+        <div class="promo-card promo-hemat">
+          <div class="promo-left">
+            <span class="promo-tag">💸 TANGGAL TUA</span>
+            <h3 class="promo-title">Kantong Tipis? Tenang!</h3>
+            <p class="promo-desc">
+              Paket hemat buat bertahan hidup 😭<br/>
+              <strong>Indomie + Air = Rp 6.000</strong>
+            </p>
+            <button class="btn-promo" onclick="filterPromo('hemat')">
+              Pilih Paket Hemat →
+            </button>
+          </div>
+          <div class="promo-right">
+            <div class="promo-emoji">🥲</div>
+            <div class="promo-sticker">IRIT<br />MODE</div>
+          </div>
+        </div>
+    
+        <!-- PROMO ORANG KAYA -->
+        <div class="promo-card promo-sultan">
+          <div class="promo-left">
+            <span class="promo-tag">💎 TANGGAL MUDA</span>
+            <h3 class="promo-title">Gaji Baru Cair 😎</h3>
+            <p class="promo-desc">
+              Saatnya upgrade hidup!<br/>
+              <strong>Indomie + Telur + Teh Botol = Rp 12.000</strong>
+            </p>
+            <button class="btn-promo" onclick="filterPromo('sultan')">
+              Gas Jadi Sultan →
+            </button>
+          </div>
+          <div class="promo-right">
+            <div class="promo-emoji">🤑</div>
+            <div class="promo-sticker">SULTAN<br />MODE</div>
+          </div>
+        </div>
+    
+      </div>
+    </section>
+
+    <!-- CATALOG -->
+    <section id="catalog" class="catalog-section container">
+      <div class="catalog-header">
+        <h2 class="section-title">Menu Lengkap</h2>
+        <p class="section-sub">Pilih favoritmu, tambah ke keranjang, selesai! 🎉</p>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="catalog-controls">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Cari produk..." autocomplete="off" />
+          <button id="search-clear" class="search-clear hidden" aria-label="Hapus pencarian">✕</button>
+        </div>
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="filter-tab active" data-cat="semua">Semua</button>
+          <button class="filter-tab" data-cat="makanan-instan">🍜 Makanan</button>
+          <button class="filter-tab" data-cat="minuman">🥤 Minuman</button>
+          <button class="filter-tab" data-cat="snack">🍟 Snack</button>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="product-grid" class="product-grid"></div>
+      <div id="empty-search" class="empty-state hidden">
+        <div class="empty-icon">😔</div>
+        <p>Produk "<span id="empty-keyword"></span>" tidak ditemukan.</p>
+        <button id="reset-search" class="btn-secondary">Tampilkan Semua</button>
+      </div>
+    </section>
+
+    <!-- CART SECTION -->
+    <section id="cart-section" class="cart-section hidden">
+      <div class="container">
+        <div class="section-header-row">
+          <h2 class="section-title">🛒 Keranjang Belanja</h2>
+          <button id="btn-close-cart" class="btn-icon">✕ Tutup</button>
+        </div>
+        <div id="cart-content">
+          <!-- Filled by JS -->
+        </div>
+        <div id="cart-empty" class="empty-state hidden">
+          <div class="empty-icon">🛒</div>
+          <p>Keranjang kamu masih kosong.<br/>Yuk pilih menu dulu!</p>
+          <button id="btn-shop-now" class="btn-primary">Lihat Menu →</button>
+        </div>
+        <div id="cart-footer" class="cart-footer hidden">
+          <div class="cart-total-row">
+            <span>Total Pesanan</span>
+            <span id="cart-total-price" class="cart-total-price">Rp 0</span>
+          </div>
+          <p class="cart-note">🛵 Gratis ongkir ke semua kamar!</p>
+          <button id="btn-checkout" class="btn-primary btn-full btn-checkout">
+            Lanjut Checkout →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKOUT SECTION -->
+    <section id="checkout-section" class="checkout-section hidden">
+      <div class="container">
+        <div class="section-header-row">
+          <h2 class="section-title">📋 Checkout</h2>
+          <button id="btn-back-cart" class="btn-icon">← Kembali</button>
+        </div>
+        <div class="checkout-layout">
+          <div class="checkout-summary">
+            <h3 class="summary-title">Ringkasan Pesanan</h3>
+            <div class="delivery-info">
+              <div class="delivery-row">
+                <span>👤 Nama</span>
+                <span id="co-name">–</span>
+              </div>
+              <div class="delivery-row">
+                <span>🚪 Kamar</span>
+                <span id="co-room">–</span>
+              </div>
+              <div class="delivery-row">
+                <span>🛵 Pengiriman</span>
+                <span class="text-green">Gratis</span>
+              </div>
+            </div>
+            <div id="co-items" class="co-items"></div>
+            <div class="co-total-row">
+              <span>Total</span>
+              <span id="co-total">Rp 0</span>
+            </div>
+          </div>
+          <div class="checkout-action">
+            <div class="checkout-note">
+              <p>✅ Pesanan akan diantar langsung ke kamar kamu.</p>
+              <p>⏱️ Estimasi: <strong>10–20 menit</strong></p>
+            </div>
+            <button id="btn-place-order" class="btn-primary btn-full btn-big">
+              🛒 Konfirmasi Pesanan
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER STATUS SECTION -->
+    <section id="order-section" class="order-section hidden">
+      <div class="container">
+        <h2 class="section-title text-center">📦 Status Pesanan</h2>
+        <div class="order-card">
+          <div class="order-info">
+            <div class="order-detail-row">
+              <span>👤 Pemesan</span><span id="ord-name">–</span>
+            </div>
+            <div class="order-detail-row">
+              <span>🚪 Kamar</span><span id="ord-room">–</span>
+            </div>
+            <div class="order-detail-row">
+              <span>💰 Total</span><span id="ord-total">–</span>
+            </div>
+          </div>
+          <!-- Status Steps -->
+          <div class="status-track">
+            <div class="status-step" id="step-diproses">
+              <div class="step-dot"></div>
+              <div class="step-line"></div>
+              <div class="step-label">
+                <span class="step-icon">🍳</span>
+                <span>Diproses</span>
+              </div>
+            </div>
+            <div class="status-step" id="step-diantar">
+              <div class="step-dot"></div>
+              <div class="step-line"></div>
+              <div class="step-label">
+                <span class="step-icon">🛵</span>
+                <span>Diantar</span>
+              </div>
+            </div>
+            <div class="status-step" id="step-selesai">
+              <div class="step-dot"></div>
+              <div class="step-line"></div>
+              <div class="step-label">
+                <span class="step-icon">✅</span>
+                <span>Selesai</span>
+              </div>
+            </div>
+          </div>
+          <p id="status-message" class="status-message">Pesanan kamu sedang diproses...</p>
+          <div id="order-items-list" class="order-items-list"></div>
+          <div id="order-done-actions" class="order-done-actions hidden">
+            <p class="done-msg">🎉 Pesanan sudah sampai! Selamat makan!</p>
+            <button id="btn-repeat-order" class="btn-secondary">🔁 Pesan Lagi</button>
+            <button id="btn-new-order" class="btn-primary">🛒 Buat Pesanan Baru</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <span class="footer-logo">🍜</span>
+          <div>
+            <strong>Warung Anak Kos</strong>
+            <p>Pesan, santai, tunggu di kamar. 🛵</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>📍 Kos Bahagia, Jl. Mahasiswa No. 88</p>
+          <p>📞 0812-3456-7890 (WhatsApp)</p>
+          <p>🕐 Buka: 06.00 – 24.00 setiap hari</p>
+        </div>
+        <div class="footer-copy">
+          <p>© 2025 Warung Anak Kos. Made with ❤️ for mahasiswa.</p>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /#app -->
+
+  <script src="script.js"></script>
+</body>
+</html>

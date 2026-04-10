@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warung Anak Kos | Arsitektur Informasi</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Devicon for Tech Stack -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <style>
+    :root {
+      --bg-deep: #09090b;
+      --bg-card: rgba(24, 24, 27, 0.7);
+      --primary: #f59e0b;
+      /* Amber 500 */
+      --primary-glow: rgba(245, 158, 11, 0.3);
+      --secondary: #10b981;
+      /* Emerald 500 */
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --border: rgba(255, 255, 255, 0.1);
+      --radius: 16px;
+      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+    }
+
+    /* Utilities */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: var(--transition);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--primary);
+      color: #000;
+      padding: 12px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--primary-glow);
+      filter: brightness(1.1);
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 90%;
+      max-width: 600px;
+      background: rgba(9, 9, 11, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    #hero h1 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      background: linear-gradient(to right, #f59e0b, #fbbf24, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+    }
+
+    #hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    /* Sections Styling */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-glow);
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    /* User Flow */
+    .flow-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+    }
+
+    .flow-step {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      margin: 0 auto 1rem;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    /* Members */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .member-card {
+      text-align: center;
+    }
+
+    .member-card .avatar {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #000;
+    }
+
+    /* Tech Stack */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .tech-card {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .tech-card:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--primary);
+    }
+
+    .tech-card i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .tech-card:hover i {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px var(--primary-glow));
+    }
+
+    .tech-card h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    .tech-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        bottom: 20px;
+        top: auto;
+      }
+
+      .flow-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .flow-step {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#hero">Beranda</a>
+    <a href="#about">Tentang</a>
+    <a href="#features">Fitur</a>
+    <a href="#flow">Proses</a>
+    <a href="#team">Tim</a>
+    <a href="#tech">Teknologi</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container reveal">
+      <h1>Warung Anak Kos</h1>
+      <p>Platform pemesanan makanan digital yang dirancang khusus untuk kenyamanan penghuni kos. Pesan, bayar, dan
+        nikmati dari kamar Anda.</p>
+      <a href="#about" class="btn-primary">Pelajari Lebih Lanjut</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="glass-card reveal">
+        <div class="section-title">
+          <h2>📌 Tentang Project</h2>
+          <p>Revolusi cara memesan makanan di lingkungan kos.</p>
+        </div>
+        <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto;">
+          Project ini lahir dari permasalahan sistem pemesanan manual yang seringkali tidak teratur dan lambat.
+          <strong>Warung Anak Kos</strong> mengintegrasikan sistem inventaris, keranjang belanja, dan pelacakan pesanan
+          real-time ke dalam satu platform web yang ringan dan responsif.
+        </p>
+        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+          <div style="text-align: center;">
+            <h3 style="color: var(--primary); font-size: 2rem;">100%</h3>
+            <p>Digital</p>
+          </div>
+          <div style="text-align: center;">
+            <h3 style="color: var(--primary); font-size: 2rem;">0</h3>
+            <p>Biaya Admin</p>
+          </div>
+          <div style="text-align: center;">
+            <h3 style="color: var(--primary); font-size: 2rem;">24/7</h3>
+            <p>Aksesibilitas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>🚀 Fitur Utama</h2>
+        <p>Semua yang Anda butuhkan dalam satu genggaman.</p>
+      </div>
+      <div class="features-grid">
+        <div class="glass-card feature-card reveal">
+          <div class="step-number" style="background:none; border:2px solid var(--primary); color: var(--primary)">1
+          </div>
+          <h3>Login Sederhana</h3>
+          <p>Akses cepat menggunakan nama dan nomor kamar tanpa ribet.</p>
+        </div>
+        <div class="glass-card feature-card reveal">
+          <div class="step-number" style="background:none; border:2px solid var(--primary); color: var(--primary)">2
+          </div>
+          <h3>Katalog Produk</h3>
+          <p>Pilihan menu lengkap mulai dari makanan berat hingga cemilan.</p>
+        </div>
+        <div class="glass-card feature-card reveal">
+          <div class="step-number" style="background:none; border:2px solid var(--primary); color: var(--primary)">3
+          </div>
+          <h3>Keranjang Belanja</h3>
+          <p>Kelola pesanan Anda dengan mudah sebelum melakukan pembayaran.</p>
+        </div>
+        <div class="glass-card feature-card reveal">
+          <div class="step-number" style="background:none; border:2px solid var(--primary); color: var(--primary)">4
+          </div>
+          <h3>Checkout Cepat</h3>
+          <p>Sistem ringkasan pesanan yang transparan dan informatif.</p>
+        </div>
+        <div class="glass-card feature-card reveal">
+          <div class="step-number" style="background:none; border:2px solid var(--primary); color: var(--primary)">5
+          </div>
+          <h3>Status Pesanan</h3>
+          <p>Pantau pesanan Anda apakah sedang diproses atau diantar.</p>
+        </div>
+        <div class="glass-card feature-card reveal">
+          <div class="step-number" style="background:none; border:2px solid var(--primary); color: var(--primary)">6
+          </div>
+          <h3>Repeat Order</h3>
+          <p>Pesan kembali menu favorit Anda hanya dengan satu klik.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USER FLOW -->
+  <section id="flow">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>🗺️ User Flow</h2>
+        <p>Alur pengguna dari awal hingga pesanan sampai.</p>
+      </div>
+      <div class="flow-container reveal">
+        <div class="flow-step">
+          <div class="step-number">1</div>
+          <div class="glass-card">
+            <h4>Login</h4>
+            <p>Masuk ke sistem</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">2</div>
+          <div class="glass-card">
+            <h4>Pilih Produk</h4>
+            <p>Eksplorasi Katalog</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">3</div>
+          <div class="glass-card">
+            <h4>Keranjang</h4>
+            <p>Review Pesanan</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">4</div>
+          <div class="glass-card">
+            <h4>Checkout</h4>
+            <p>Konfirmasi Akhir</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">5</div>
+          <div class="glass-card">
+            <h4>Diantar</h4>
+            <p>Pesanan Sampai</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>👥 Anggota Kelompok</h2>
+        <p>Tim hebat di balik pengembangan aplikasi.</p>
+      </div>
+      <div class="members-grid">
+        <div class="glass-card member-card reveal">
+          <div class="avatar">R</div>
+          <h3>Rizal</h3>
+          <p style="color: var(--primary)">Lead Developer</p>
+        </div>
+        <div class="glass-card member-card reveal">
+          <div class="avatar">A</div>
+          <h3>Anggota 2</h3>
+          <p style="color: var(--text-muted)">UI/UX Designer</p>
+        </div>
+        <div class="glass-card member-card reveal">
+          <div class="avatar">B</div>
+          <h3>Anggota 3</h3>
+          <p style="color: var(--text-muted)">Project Manager</p>
+        </div>
+        <div class="glass-card member-card reveal">
+          <div class="avatar">C</div>
+          <h3>Anggota 4</h3>
+          <p style="color: var(--text-muted)">Data Analyst</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="tech">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>🛠️ Tech Stack</h2>
+        <p>Teknologi modern yang kami gunakan.</p>
+      </div>
+      <div class="tech-grid">
+        <div class="glass-card tech-card reveal">
+          <i class="devicon-html5-plain colored"></i>
+          <h4>HTML5</h4>
+          <p>Fungsi: struktur halaman web</p>
+        </div>
+        <div class="glass-card tech-card reveal">
+          <i class="devicon-css3-plain colored"></i>
+          <h4>CSS3</h4>
+          <p>Fungsi: styling, layout, responsive design</p>
+        </div>
+        <div class="glass-card tech-card reveal">
+          <i class="devicon-javascript-plain colored"></i>
+          <h4>JavaScript (Vanilla)</h4>
+          <p>Fungsi: interaksi, logic aplikasi (cart, checkout, status)</p>
+        </div>
+        <div class="glass-card tech-card reveal">
+          <div style="font-size: 3.5rem; margin-bottom: 1rem; color: #0ea5e9; font-weight: 800;">DB</div>
+          <h4>LocalStorage</h4>
+          <p>Fungsi: menyimpan data cart & user di browser tanpa backend</p>
+        </div>
+        <div class="glass-card tech-card reveal">
+          <i class="devicon-vscode-plain colored"></i>
+          <h4>VS Code</h4>
+          <p>Fungsi: code editor</p>
+        </div>
+        <div class="glass-card tech-card reveal">
+          <i class="devicon-git-plain colored"></i>
+          <h4>Git</h4>
+          <p>Fungsi: version control</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section id="closing" style="text-align: center;">
+    <div class="container reveal">
+      <h2>Terima Kasih</h2>
+      <p style="margin-bottom: 2rem;">Ada pertanyaan mengenai project kami?</p>
+      <a href="index.html" class="btn-primary">Coba Aplikasi Sekarang</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Warung Anak Kos &bull; Project Arsitektur Informasi</p>
+  </footer>
+
+  <script>
+    // Scroll Reveal Animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth Scrolling for Nav Links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        document.querySelector(targetId).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Dynamic Glow on Tech Cards
+    document.querySelectorAll('.tech-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--x', `${x}px`);
+        card.style.setProperty('--y', `${y}px`);
+      });
+    });
+  </script>
+</body>
+
+</html>
